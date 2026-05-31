@@ -1,6 +1,4 @@
-# ai-lead-scoring-engine
-An automated lead scoring and sales routing pipeline using n8n, Webhooks, and Custom JS/Python logic
-# 🚀 AI-Powered Lead Scoring & Routing Pipeline
+# 🤖🇦🇮👾 AI-Powered Lead Scoring & Routing Pipeline
 
 A high-performance, custom-coded backend automation engine built to instantly evaluate, score, and route e-commerce or B2B leads. This system bridges the gap between frontend web forms and backend sales operations using conditional logic, custom scripting, and real-time APIs.
 
