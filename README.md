@@ -24,7 +24,6 @@ Unlike basic "trigger-action" automations, this pipeline utilizes **Custom JavaS
 * **Drops response time to absolute zero**, preventing high-ticket lead leakage.
 * Eliminates manual inbox filtering for the sales team.
 * Delivers a highly professional, instant brand experience to the customer while the team prepares the pitch.
-
 ---
 *Created for robust, scalable backend operations. Feel free to import the `.json` file into your n8n instance to test the logic.*
 
@@ -43,17 +42,13 @@ Unlike basic "trigger-action" automations, this pipeline utilizes **Custom JavaS
 Beyond Slack, the system simultaneously dispatches a structured internal email to the sales and operations team. This ensures that even if a team member is away from Slack, the high-priority VIP lead data (Name, Budget, Lead Score, and Customer Message) is securely waiting in their inbox for immediate action.
 ![Internal Team Email](https://github.com/user-attachments/assets/5a983a02-afa4-477e-811d-0038ab1991ec)
 
-**5. Custom Scripting (JavaScript & Python Integration)**
-Relying solely on native drag-and-drop automation nodes limits scalability. This pipeline is engineered with custom code blocks to handle complex data parsing and advanced logic:
 
-* **JavaScript (Node.js):** Executes the primary array iterations, sanitizes incoming JSON payloads, and calculates the exact `lead_score` dynamically using custom mathematical logic based on financial parameters and keyword intent.
-* **Python (AI-Ready Architecture):** The system architecture is designed to seamlessly integrate Python scripts for future AI/Machine Learning expansions - such as running Natural Language Processing (NLP) on the user's message to predict customer sentiment before the sales team even reads the inquiry.
 
 **5. Custom Scripting (JavaScript & Python Integration)**
 Relying solely on native drag-and-drop automation nodes limits scalability. This pipeline is engineered with custom code blocks to handle complex data parsing and advanced logic:
 
 * **JavaScript (Node.js):** Executes the primary array iterations, sanitizes incoming JSON payloads, and calculates the exact `lead_score` dynamically using custom mathematical logic based on financial parameters and keyword intent.
-![Custom JavaScript Logic](https://github.com/user-attachments/assets/<img width="1899" height="860" alt="PROJ2JS" src="https://github.com/user-attachments/assets/0ab0a600-b104-433b-a184-804f050b07da" />)
+![Custom JavaScript Logic]<img width="1899" height="860" alt="PROJ2JS" src="https://github.com/user-attachments/assets/0ab0a600-b104-433b-a184-804f050b07da" />)
 
 * **Python (AI-Ready Architecture):** The system architecture is designed to seamlessly integrate Python scripts for future AI/Machine Learning expansions—such as running Natural Language Processing (NLP) on the user's message to predict customer sentiment before the sales team even reads the inquiry.
-![Custom Python Logic](https://github.com/user-attachments/assets/<img width="1889" height="847" alt="proj2Python" src="https://github.com/user-attachments/assets/e5b04516-9571-4414-ac2c-bb64b3f9f113" />)
+![Custom Python Logic]<img width="1889" height="847" alt="proj2Python" src="https://github.com/user-attachments/assets/e5b04516-9571-4414-ac2c-bb64b3f9f113" />)
