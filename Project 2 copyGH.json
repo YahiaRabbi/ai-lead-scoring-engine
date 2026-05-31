@@ -1,0 +1,208 @@
+{
+  "name": "Project 2: AI Lead Scoring Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "test-webhook-url",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ac5c19d3-5279-4aed-b7d2-2d332c27729b",
+      "name": "Webhook",
+      "webhookId": "test-webhook-url"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (let item of $input.all()) {\n  let data = item.json.body;\n  let budget = parseInt(data.budget || 0);\n  let message = (data.message || '').toLowerCase();\n\n  let score = 0;\n\n  if (budget >= 50000) {\n    score += 50;\n  } else if (budget >= 10000) {\n    score += 20;\n  }\n\n  if (message.includes('commercial') || message.includes('asap')) {\n    score += 40;\n  }\n  item.json.lead_score = score;\n  item.json.is_vip_lead = score >= 80;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e93fcb79-aa3f-4773-bc56-395f1115220f",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9518a45d-ead2-4c43-afc7-0de71ae55c43",
+              "leftValue": "={{ $json.body.is_vip_lead }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "795ab22d-44f0-4818-9bf2-d7c6a4271c1b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "YOUR_SLACK_CHANNEL_ID"
+        },
+        "text": "=🚨 *New VIP Lead Alert!* 🚨\n*Name:* {{$json.body.name}}\n*Email:* {{$json.body.email}}\n*Budget:* ৳{{$json.body.budget}} BDT\n*Message:* {{$json.body.message}}\n*Lead Score:* {{$json.body.lead_score}} 🔥",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        768,
+        0
+      ],
+      "id": "ae1187aa-1ddc-43a1-af18-65183e86d578",
+      "name": "Send a message",
+      "webhookId": "c1c8e927-f1ef-454e-9102-a5d7a14c97aa",
+      "credentials": {
+        "slackApi": {
+          "id": "YOUR_SLACK_CREDENTIAL_ID",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "admin@yourdomain.com",
+        "toEmail": "={{$json.body.email}}",
+        "subject": "=Welcome to [Your Brand Name], {{$json.body.name}}! ✨",
+        "html": "=<div style=\"font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 25px; border-radius: 10px; background-color: #ffffff;\">\n    \n    <div style=\"text-align: center; border-bottom: 2px solid #D4AF37; padding-bottom: 15px; margin-bottom: 20px;\">\n        <h2 style=\"color: #2C3E50; margin: 0; font-size: 24px;\">✨ Welcome to [Your Brand Name] ✨</h2>\n        <p style=\"color: #7f8c8d; font-size: 14px; margin-top: 5px;\">Premium Authentic Pakistani Collections</p>\n    </div>\n\n    <p style=\"font-size: 16px;\">Dear <strong>{{$json.body.name}}</strong>,</p>\n    \n    <p style=\"font-size: 16px;\">Thank you for reaching out to us. We are thrilled to receive your VIP inquiry:</p>\n    \n    <blockquote style=\"background-color: #f9f9f9; border-left: 4px solid #D4AF37; padding: 12px 15px; margin: 20px 0; font-style: italic; color: #555;\">\n        \"{{$json.body.message}}\"\n    </blockquote>\n    \n    <p style=\"font-size: 16px;\">Our expert fashion consultants are currently reviewing your requirements within your budget of <strong>৳{{$json.body.budget}} BDT</strong>.</p>\n    \n    <p style=\"font-size: 16px;\">We will get back to you very shortly with a curated selection of our most exclusive collections tailored just for you.</p>\n    \n    <br>\n    <p style=\"font-size: 16px; margin-bottom: 0;\">Warm Regards,</p>\n    <p style=\"font-size: 16px; font-weight: bold; color: #2C3E50; margin-top: 5px;\">The [Your Brand Name] Team</p>\n</div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        752,
+        -224
+      ],
+      "id": "2b18645e-7b1e-4b75-a8af-ab4df26a4d76",
+      "name": "Send an Email",
+      "webhookId": "61e450fe-582d-49c9-b7d4-5fcddf2d9db6",
+      "credentials": {
+        "smtp": {
+          "id": "YOUR_SMTP_CREDENTIAL_ID",
+          "name": "SMTP account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "=admin@yourdomain.com",
+        "toEmail": "admin@yourdomain.com",
+        "subject": "=🚨 New VIP Fashion Lead: {{$json.body.name}}",
+        "emailFormat": "text",
+        "text": "=Hello Team,\n\nWe just received a new VIP Lead from our scoring engine! Here are the details:\n\nName: {{$json.body.name}}\nEmail: {{$json.body.email}}\nBudget: ${{$json.body.budget}}\nLead Score: {{$json.body.lead_score}} 🔥\nMessage: {{$json.body.message}}\n\nPlease follow up with this lead as soon as possible.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        816,
+        240
+      ],
+      "id": "ab8847e7-8102-4961-9ddf-20f745620d93",
+      "name": "Send an Email1",
+      "webhookId": "54b37886-5506-4dbe-8e52-e8f3dde360dc",
+      "credentials": {
+        "smtp": {
+          "id": "YOUR_SMTP_CREDENTIAL_ID",
+          "name": "SMTP account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send an Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "833f51cf-24ad-4ae3-8a4d-f618ced5b0c6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "YOUR_INSTANCE_ID"
+  },
+  "id": "dd9BIZWG695HzdL3",
+  "tags": []
+}
