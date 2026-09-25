@@ -42,7 +42,7 @@
           "conditions": [
             {
               "id": "9518a45d-ead2-4c43-afc7-0de71ae55c43",
-              "leftValue": "={{ $json.body.is_vip_lead }}",
+              "leftValue": "={{ $json.is_vip_lead }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -72,7 +72,7 @@
           "mode": "id",
           "value": "YOUR_SLACK_CHANNEL_ID"
         },
-        "text": "=🚨 *New VIP Lead Alert!* 🚨\n*Name:* {{$json.body.name}}\n*Email:* {{$json.body.email}}\n*Budget:* ৳{{$json.body.budget}} BDT\n*Message:* {{$json.body.message}}\n*Lead Score:* {{$json.body.lead_score}} 🔥",
+        "text": "=🚨 *New VIP Lead Alert!* 🚨\n*Name:* {{$json.body.name}}\n*Email:* {{$json.body.email}}\n*Budget:* ৳{{$json.body.budget}} BDT\n*Message:* {{$json.body.message}}\n*Lead Score:* {{$json.lead_score}} 🔥",
         "otherOptions": {
           "includeLinkToWorkflow": false
         }
@@ -125,7 +125,7 @@
         "toEmail": "admin@yourdomain.com",
         "subject": "=🚨 New VIP Fashion Lead: {{$json.body.name}}",
         "emailFormat": "text",
-        "text": "=Hello Team,\n\nWe just received a new VIP Lead from our scoring engine! Here are the details:\n\nName: {{$json.body.name}}\nEmail: {{$json.body.email}}\nBudget: ${{$json.body.budget}}\nLead Score: {{$json.body.lead_score}} 🔥\nMessage: {{$json.body.message}}\n\nPlease follow up with this lead as soon as possible.",
+        "text": "=Hello Team,\n\nWe just received a new VIP Lead from our scoring engine! Here are the details:\n\nName: {{$json.body.name}}\nEmail: {{$json.body.email}}\nBudget: ৳{{$json.body.budget}} BDT\nLead Score: {{$json.lead_score}} 🔥\nMessage: {{$json.body.message}}\n\nPlease follow up with this lead as soon as possible.",
         "options": {
           "appendAttribution": false
         }
